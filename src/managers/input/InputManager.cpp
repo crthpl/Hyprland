@@ -811,6 +811,12 @@ void CInputManager::applyConfigToKeyboard(SKeyboard* pKeyboard) {
     EMIT_HOOK_EVENT("activeLayout", (std::vector<void*>{pKeyboard, (void*)&LAYOUTSTR}));
 
     Debug::log(LOG, "Set the keyboard layout to %s and variant to %s for keyboard \"%s\"", rules.layout, rules.variant, pKeyboard->keyboard->name);
+
+    if (wlr_input_device_is_libinput(pKeyboard)) {
+        const auto LIBINPUTDEV = (libinput_device*)wlr_libinput_get_device_handle(pKeyboard);
+        const auto seat_id = HASCONFIG ? g_pConfigManager->getDeviceString(devname, "seat") : g_pconfigManager->getString("input:seat");
+        libinput_set_seat_logical_name(LIBINPUTDEV, seat_id);
+    }
 }
 
 void CInputManager::newMouse(wlr_input_device* mouse, bool virt) {
@@ -869,6 +875,8 @@ void CInputManager::setPointerConfigs() {
 
         if (wlr_input_device_is_libinput(m.mouse)) {
             const auto LIBINPUTDEV = (libinput_device*)wlr_libinput_get_device_handle(m.mouse);
+	    const auto seat_id = HASCONFIG ? g_pConfigManager->getDeviceString(devname, "seat") : g_pconfigManager->getString("input:seat");
+	    libinput_set_seat_logical_name(LIBINPUTDEV, seat_id);
 
             if ((HASCONFIG ? g_pConfigManager->getDeviceInt(devname, "clickfinger_behavior") : g_pConfigManager->getInt("input:touchpad:clickfinger_behavior")) ==
                 0) // toggle software buttons or clickfinger

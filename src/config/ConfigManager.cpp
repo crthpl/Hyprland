@@ -153,6 +153,7 @@ void CConfigManager::setDefaultVars() {
 
     configValues["animations:enabled"].intValue = 1;
 
+    configValues["input:seat"].strValue                             = "seat0";
     configValues["input:follow_mouse"].intValue                     = 1;
     configValues["input:mouse_refocus"].intValue                    = 1;
     configValues["input:sensitivity"].floatValue                    = 0.f;
@@ -208,6 +209,7 @@ void CConfigManager::setDefaultVars() {
 void CConfigManager::setDeviceDefaultVars(const std::string& dev) {
     auto& cfgValues = deviceConfigs[dev];
 
+    cfgValues["seat"].strValue                    = "seat0";
     cfgValues["sensitivity"].floatValue           = 0.f;
     cfgValues["accel_profile"].strValue           = STRVAL_EMPTY;
     cfgValues["kb_file"].strValue                 = STRVAL_EMPTY;
@@ -337,7 +339,7 @@ void CConfigManager::configSetValueSafe(const std::string& COMMAND, const std::s
                 return;
             }
 
-            parseError = "Error setting value <" + VALUE + "> for field <" + COMMAND + ">: No such field.";
+            parseError = "Error setting device value <" + VALUE + "> for field <" + COMMAND + ">: No such field.";
             return;
         }
 
