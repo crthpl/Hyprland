@@ -1,0 +1,8 @@
+# build products
+frame.png
+frame.jxl
+template.jxl
+searcher
+search16
+*.o
+hashquine.png
