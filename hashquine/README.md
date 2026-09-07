@@ -31,8 +31,15 @@ Hashquines exist for MD5 and for SHA-1. They do not use search. They use
 collision attacks, which are cheap for those two functions. SHA-256 has no known
 collision attack, so that road is closed.
 
-What is left is honest brute force on a shorter target. This file does 40 bits,
-which cost about 1.1 trillion hashes and 90 minutes on 4 cores.
+What is left is honest brute force on a shorter target. This file does 40 bits.
+The search took 6.16e11 tries and 51 minutes on 4 cores, at 203 million tries
+per second. The expected count was 1.1e12, so this run was lucky.
+
+```
+sha256  894eaf6cb44bb5d4eae09913e15f2e31101abc1582b7fe716ba57dde24e6e9cd
+nonce   02000023e5acddd5      (the last 8 bytes of the file)
+size    13768 bytes
+```
 
 | digits | bits | tries      | time on 4 cores at 200M/s |
 | -----: | ---: | ---------: | ------------------------- |
